@@ -73,15 +73,29 @@ export class WalletService {
       const contractAddress = new Address(this._tokenAddress);
       const tokenRootContract = new Contract(provider, JSON.parse(this._tokenRootABI), contractAddress);
 
-      const tokenWalletData = await (tokenRootContract.methods as any).walletOf({ answerId: 0, walletOwner: recipientAddress }).call();
+      // const tokenWalletData = await (tokenRootContract.methods as any).walletOf({ answerId: 0, walletOwner: recipientAddress }).call();
 
-      const tokenWalletAddress: Address = tokenWalletData.value0;
-      const tokenWalletContract = new Contract(provider, JSON.parse(this._tokenWalletABI), tokenWalletAddress);
-      const tokenWalletBalance = await (tokenWalletContract.methods as any).balance({ answerId: 0 }).call();
+      // const tokenWalletAddress: Address = tokenWalletData.value0;
+      // this.logger.debug(tokenWalletAddress);
+      // if (!tokenWalletAddress) {
+      //   this.logger.debug('Token wallet not found. Creating...');
+      //   /** Create first */
+      //   const data = await (tokenRootContract.methods as any).deployWallet({
+      //     answerId: 0,
+      //     walletOwner: recipientAddress,
+      //     deployWalletValue: this._transferAmount,
+      //   }).send({
+      //     from: this._senderAddress,
+      //     amount: '300000000',
+      //   });
+      //   this.logger.debug('Token wallet created: ', data);
+      // }
+      // const tokenWalletContract = new Contract(provider, JSON.parse(this._tokenWalletABI), tokenWalletAddress);
+      // const tokenWalletBalance = await (tokenWalletContract.methods as any).balance({ answerId: 0 }).call();
 
-      this.logger.debug(`Recipient wallet address: `, recipientAddress);
-      this.logger.debug('Recipient token wallet address: ', tokenWalletAddress.toString());
-      this.logger.debug('Recipient token wallet balance: ', tokenWalletBalance.value0);
+      // this.logger.debug(`Recipient wallet address: `, recipientAddress);
+      // this.logger.debug('Recipient token wallet address: ', tokenWalletAddress.toString());
+      // this.logger.debug('Recipient token wallet balance: ', tokenWalletBalance.value0);
 
       const senderTokenWalletData = await (tokenRootContract.methods as any).walletOf({ answerId: 0, walletOwner: this._senderAddress }).call();
       const senderTokenWalletAddress: Address = senderTokenWalletData.value0;
@@ -111,6 +125,10 @@ export class WalletService {
       throw new BadRequestException(`Claim failed: ${error.message}`);
     }
     return transactionHash;
+  }
+
+  private getOrCreateTokenWallet(owner: string) {
+//
   }
 
   private async getProvider(): Promise<ProviderRpcClient> {
