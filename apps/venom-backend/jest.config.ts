@@ -1,6 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'venom-backend',
+  // displayName: [{
+  //   name: 'venom-backend',
+  //   color: 'blue',
+  // }],
   preset: '../../jest.preset.js',
   testEnvironment: 'node',
   transform: {

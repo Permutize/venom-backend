@@ -4,18 +4,26 @@
   "license": "MIT",
   "scripts": {
     "nx:build": "nx run-many --target=build --all",
-    "start": "nx run venom-backend:serve"
+    "start": "nx run venom-backend:serve",
+    "dev": "nx run venom-backend:dev"
   },
   "private": true,
   "dependencies": {
     "@apollo/server": "^4.10.2",
+    "@eversdk/core": "^1.45.1",
+    "@eversdk/lib-node": "^1.45.1",
     "@nestjs/apollo": "^12.1.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/graphql": "^12.1.1",
+    "@nestjs/mongoose": "^10.0.6",
     "@nestjs/platform-express": "^10.0.2",
-    "axios": "^1.6.0",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "everscale-inpage-provider": "^0.3.64",
+    "everscale-standalone-client": "^2.1.24",
     "graphql": "^16.8.1",
+    "mongoose": "^8.3.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "tslib": "^2.3.0"
