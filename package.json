@@ -19,6 +19,7 @@
     "@nestjs/mongoose": "^10.0.6",
     "@nestjs/platform-express": "^10.0.2",
     "axios": "^1.6.8",
+    "class-transformer": "^0.5.1",
     "dotenv": "^16.4.5",
     "everscale-inpage-provider": "^0.3.64",
     "everscale-standalone-client": "^2.1.24",

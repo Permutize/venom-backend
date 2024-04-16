@@ -1,10 +1,10 @@
-version: '3.4'
-
 services:
   server:
     build:
       context: .
       dockerfile: Dockerfile
+    env_file:
+      - .env
     pull_policy: always
     depends_on:
       - db
@@ -17,18 +17,20 @@ services:
         driver: "json-file"
         options:
             max-size: "5m"
+            max-file: "5"
   db:
     restart: 'no'
     image: mongo:6
     volumes:
       - './db-data:/data/db'
     ports:
-      - '${MONGO_PORT:-27120}:27017'
+      - '${DOCKER_MONGO_PORT:-127.0.0.1:27120}:27017'
     networks:
       - backend-net
     logging:
       options:
         max-size: "1m"
+        max-file: "5"
 
 networks:
   backend-net:

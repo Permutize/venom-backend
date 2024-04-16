@@ -24,6 +24,7 @@ export class WalletService {
   private readonly _tokenRootABI: string;
   private readonly _tokenWalletABI: string;
   private readonly _transferAmount: string;
+  private readonly _noRepeats: boolean = true;
 
   private readonly logger = new Logger(WalletService.name);
 
@@ -38,12 +39,14 @@ export class WalletService {
     }
     this._tokenAddress = process.env.TOKEN_ADDRESS;
     this._tokenRootABI =
-      readFileSync(path.resolve(__dirname, "../../../contracts/TokenRoot.abi.json")).toString("utf8")
+      readFileSync(path.resolve(__dirname, "assets/contracts/TokenRoot.abi.json")).toString("utf8")
 
     this._tokenWalletABI =
-      readFileSync(path.resolve(__dirname, "../../../contracts/TokenWallet.abi.json")).toString("utf8")
+      readFileSync(path.resolve(__dirname, "assets/contracts/TokenWallet.abi.json")).toString("utf8")
 
     this._transferAmount = process.env.TRANSFER_AMOUNT;
+
+    this._noRepeats = !process.env.ENABLE_REPEATS;
   }
 
   public async verify(walletAddress?: string): Promise<string> {
@@ -55,11 +58,12 @@ export class WalletService {
   }
 
   public async claim(recipientAddress: string): Promise<string> {
-    const doc = await this.walletModel.findOne({ walletAddress: recipientAddress });
-
-    // if (doc) {
-    //   throw new BadRequestException('Wallet already claimed');
-    // }
+    if (this._noRepeats) {
+      const doc = await this.walletModel.findOne({ walletAddress: recipientAddress });
+      if (doc) {
+        throw new BadRequestException('Wallet already claimed');
+      }
+    }
 
     let transactionHash: string;
 
