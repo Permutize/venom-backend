@@ -51,10 +51,7 @@ export class WalletService {
 
   public async verify(walletAddress?: string): Promise<string> {
     const doc = await this.walletModel.findOne({ walletAddress });
-    if (!doc) {
-      throw new NotFoundException('Wallet not found');
-    }
-    return doc.transactionHash;
+    return doc?.transactionHash;
   }
 
   public async claim(recipientAddress: string): Promise<string> {
