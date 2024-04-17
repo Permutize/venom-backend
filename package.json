@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "nx:build": "nx run-many --target=build --all",
-    "start": "nx run venom-backend:serve",
+    "start": "node dist/apps/venom-backend/main.js",
     "dev": "nx run venom-backend:serve:development"
   },
   "private": true,

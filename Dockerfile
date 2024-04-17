@@ -23,8 +23,8 @@ COPY ./apps/ /project/apps
 # Build the server
 RUN \
   npm pkg delete scripts.prepare \
-  && npm ci
-  # && npm run nx:build
+  && npm ci \
+  && npm run nx:build
 
 ENV HOST=0.0.0.0
 

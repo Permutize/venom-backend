@@ -116,6 +116,7 @@ export class WalletService {
       });
 
       transactionHash = await this.getLastTransaction(this._senderAddress);
+      this.logger.debug('Transaction hash: ', transactionHash);
       await this.saveTransaction(recipientAddress, transactionHash);
     } catch (error) {
       this.logger.error(error);
