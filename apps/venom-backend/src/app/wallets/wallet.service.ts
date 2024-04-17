@@ -50,13 +50,13 @@ export class WalletService {
   }
 
   public async verify(walletAddress?: string): Promise<string> {
-    const doc = await this.walletModel.findOne({ walletAddress });
+    const doc = await this.walletModel.findOne({ walletAddress, tokenAddress: this._tokenAddress });
     return doc?.transactionHash;
   }
 
   public async claim(recipientAddress: string): Promise<string> {
     if (this._noRepeats) {
-      const doc = await this.walletModel.findOne({ walletAddress: recipientAddress });
+      const doc = await this.walletModel.findOne({ walletAddress: recipientAddress, tokenAddress: this._tokenAddress });
       if (doc) {
         throw new BadRequestException('Wallet already claimed');
       }
@@ -167,7 +167,11 @@ export class WalletService {
   }
 
   private async saveTransaction(walletAddress: string, transactionHash: string): Promise<void> {
-    await this.walletModel.updateOne({ walletAddress }, { walletAddress, transactionHash }, { upsert: true });
+    await this.walletModel.updateOne(
+      { walletAddress, tokenAddress: this._tokenAddress },
+      { walletAddress, transactionHash, tokenAddress: this._tokenAddress },
+      { upsert: true }
+    );
   }
 
   private async getLastTransaction(walletAddress: string): Promise<string> {

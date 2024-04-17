@@ -16,6 +16,9 @@ export type WalletDocument = Wallet & Document;
 })
 export class Wallet {
   @Prop({ required: true, type: String })
+  tokenAddress: string;
+
+  @Prop({ required: true, type: String })
   walletAddress: string;
 
   @Prop({ required: true, type: String })
@@ -25,7 +28,7 @@ export class Wallet {
   updatedAt?: Date;
 }
 
-export const WalletSchema = SchemaFactory.createForClass(Wallet).index({ walletAddress: 1 }, { unique: true });
+export const WalletSchema = SchemaFactory.createForClass(Wallet).index({ walletAddress: 1, tokenAddress: 1 }, { unique: true });
 
 WalletSchema.virtual('id').get(function (this: WalletDocument) {
   return this._id;
