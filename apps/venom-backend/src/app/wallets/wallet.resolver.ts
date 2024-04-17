@@ -5,6 +5,11 @@ import { WalletService } from "./wallet.service";
 export class WalletResolver {
   constructor(private readonly walletService: WalletService) { }
 
+  @Query(() => String)
+  public async contractAddress(): Promise<string> {
+    return this.walletService.contractAddress();
+  }
+
   @Query(() => String, { nullable: true })
   public async verify(@Args('walletAddress', { nullable: false }) walletAddress?: string): Promise<string> {
     return this.walletService.verify(walletAddress);

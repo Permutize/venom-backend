@@ -124,8 +124,8 @@ export class WalletService {
     return transactionHash;
   }
 
-  private getOrCreateTokenWallet(owner: string) {
-//
+  public async contractAddress() {
+    return this._tokenAddress;
   }
 
   private async getProvider(): Promise<ProviderRpcClient> {
@@ -147,7 +147,7 @@ export class WalletService {
             keystore,
             accountsStorage,
             connection: {
-              id: 1,
+              id: 1002,
               type: 'graphql',
               data: {
                 endpoints: [this._endpoint]

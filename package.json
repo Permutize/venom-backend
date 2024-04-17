@@ -5,7 +5,7 @@
   "scripts": {
     "nx:build": "nx run-many --target=build --all",
     "start": "nx run venom-backend:serve",
-    "dev": "nx run venom-backend:dev"
+    "dev": "nx run venom-backend:serve:development"
   },
   "private": true,
   "dependencies": {
